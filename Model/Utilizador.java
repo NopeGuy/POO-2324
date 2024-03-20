@@ -2,15 +2,18 @@ package Model;
 
 public abstract class Utilizador {
 
+    // Para auto incrementar o ID de utilizador
+    private static int nUtilizadorCounter = 0;
+
     // Variáveis de instância
-    private String nUtilizador;
+    private int nUtilizador;
     private String nome;
     private String morada;
     private String email;
     private int freqCard;
 
     // Getters
-    public String getNUtilizador() {
+    public int getNUtilizador() {
         return this.nUtilizador;
     }
 
@@ -30,8 +33,12 @@ public abstract class Utilizador {
         return this.freqCard;
     }
 
+    public int getnUtilizadorCounter() {
+        return nUtilizadorCounter;
+    }
+
     // Setters
-    public void setNUtilizador(String nUtilizador) {
+    public void setNUtilizador(int nUtilizador) {
         this.nUtilizador = nUtilizador;
     }
 
@@ -51,9 +58,13 @@ public abstract class Utilizador {
         this.freqCard = freqCard;
     }
 
+    public void setnUtilizadorCounter(int nUtilizadorCounter) {
+        Utilizador.nUtilizadorCounter = nUtilizadorCounter;
+    }
+    
     // Construtores
-    public Utilizador(String nUtilizador, String nome, String morada, String email, int freqCard) {
-        this.nUtilizador = nUtilizador;
+    public Utilizador(String nome, String morada, String email, int freqCard) {
+        this.nUtilizador = nUtilizadorCounter++;
         this.nome = nome;
         this.morada = morada;
         this.email = email;
@@ -69,7 +80,7 @@ public abstract class Utilizador {
     }
 
     public Utilizador() {
-        this.nUtilizador = "";
+        this.nUtilizador = nUtilizadorCounter++;
         this.nome = "";
         this.morada = "";
         this.email = "";

@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class MenuPrincipal {
     public void start(){
-        System.out.println("\n\n-------------------------");
-        System.out.println("|Bem-vindo ao GymAtHome!|");
-        System.out.println("-------------------------\n\n");
+        System.out.println("\n\n---------------------------");
+        System.out.println("| Bem-vindo ao GymAtHome! |");
+        System.out.println("---------------------------\n\n");
         System.out.println("1 - Utilizadores");
         System.out.println("2 - Atividades");
         System.out.println("3 - Treino");
