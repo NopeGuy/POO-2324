@@ -3,7 +3,7 @@ package Model;
 public abstract class Utilizador {
 
     // Para auto incrementar o ID de utilizador
-    private static int nUtilizadorCounter = 0;
+    private int nUtilizadorCounter = 0;
 
     // Variáveis de instância
     private int nUtilizador;
@@ -59,7 +59,7 @@ public abstract class Utilizador {
     }
 
     public void setnUtilizadorCounter(int nUtilizadorCounter) {
-        Utilizador.nUtilizadorCounter = nUtilizadorCounter;
+        this.nUtilizadorCounter = nUtilizadorCounter;
     }
     
     // Construtores
@@ -80,7 +80,7 @@ public abstract class Utilizador {
     }
 
     public Utilizador() {
-        this.nUtilizador = nUtilizadorCounter++;
+        this.nUtilizador = 0;
         this.nome = "";
         this.morada = "";
         this.email = "";

@@ -48,6 +48,7 @@ public class UtilizadorAmador extends Utilizador{
                 ", Email = " + getEmail() +
                 ", Morada = " + getMorada() +
                 ", Frequência Cardíaca Média = " + getFreqCard() +
+                ", Tipo = Amador" +
                 ", Pontos = " + pontos +
                 ", Atividades Realizadas = " + atividadesRealizadas +
                 " }";
