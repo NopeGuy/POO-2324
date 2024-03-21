@@ -1,6 +1,17 @@
+import Controller.Controller;
+import Exceptions.UtilizadorJaExisteException;
+import Model.Model;
+import View.*;
+
 public class Main {
-    public static void main(String[] args) {
-        Utilizador u = new Utilizador("91637", "Henrique", "Rua XAUXAU", "xauxau@gmail.com", "Amador", 75);
-        System.out.println(u.toString());
+    public static void main(String[] args) throws UtilizadorJaExisteException {
+        Model m = new Model();
+        Controller c = new Controller(m);
+
+        // Depois incrementar counter do ID de utilizador quando se ler de ficheiro 
+        // com setter de nUtilizadorCounter no menu principal chamando o model
+
+        Menu menu = new Menu(c);
+        menu.start();
     }
 }
