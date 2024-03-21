@@ -73,5 +73,9 @@ public class UtilizadorProfissional extends Utilizador{
     public Utilizador clone() {
         return new UtilizadorProfissional(this);
     }
+
+     public double calculoCalorias(){
+        return 0;
+    }
     
 }

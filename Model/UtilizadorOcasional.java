@@ -75,4 +75,7 @@ public class UtilizadorOcasional extends Utilizador{
         return new UtilizadorOcasional(this);
     }
     
+     public double calculoCalorias(){
+        return 0;
+    }
 }

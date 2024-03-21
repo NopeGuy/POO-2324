@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.List;
+
 public abstract class Utilizador {
 
     // Para auto incrementar o ID de utilizador
@@ -11,7 +13,8 @@ public abstract class Utilizador {
     private String morada;
     private String email;
     private int freqCard;
-
+    private List<Atividade> atividadesEfetuadas;
+    
     // Getters
     public int getNUtilizador() {
         return this.nUtilizador;
@@ -37,6 +40,10 @@ public abstract class Utilizador {
         return nUtilizadorCounter;
     }
 
+    public List<Atividade> getAtividadesEfetuadas() {
+        return this.atividadesEfetuadas;
+    }
+
     // Setters
     public void setNUtilizador(int nUtilizador) {
         this.nUtilizador = nUtilizador;
@@ -60,6 +67,10 @@ public abstract class Utilizador {
 
     public void setnUtilizadorCounter(int nUtilizadorCounter) {
         this.nUtilizadorCounter = nUtilizadorCounter;
+    }
+
+    public void setAtividades(List<Atividade> atividadesEfetuadas){
+        this.atividadesEfetuadas = atividadesEfetuadas;
     }
     
     // Construtores
@@ -92,4 +103,7 @@ public abstract class Utilizador {
     public abstract boolean equals(Object o);
 
     public abstract Utilizador clone();
+
+    // método que determine um factor multiplicativo a utilizar no cálculo das calorias
+    public abstract double calculoCalorias();
 }

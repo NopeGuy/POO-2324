@@ -44,4 +44,25 @@ public class Model {
     public void listarUtilizadores() {
         this.utilizadorManager.listarUtilizadores();
     }
+
+    public void removerUtilizador(int nUtilizador) {
+        this.utilizadorManager.removeUtilizador(nUtilizador);
+    }
+
+    public void atualizarUtilizador(int nUtilizador, int opcao, String value){
+        switch(opcao){
+            case 1 :
+                this.utilizadorManager.atualizarNome(nUtilizador, value);
+                break;
+            case 2 :
+                this.utilizadorManager.atualizarEmail(nUtilizador, value);
+                break;
+            case 3 :
+                this.utilizadorManager.atualizarMorada(nUtilizador, value);
+                break;
+            case 4 :
+                this.utilizadorManager.atualizarFreqCard(nUtilizador, Integer.parseInt(value));
+                break;
+    }
+}
 }

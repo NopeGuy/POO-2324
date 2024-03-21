@@ -11,7 +11,7 @@ public class Main {
         // Depois incrementar counter do ID de utilizador quando se ler de ficheiro 
         // com setter de nUtilizadorCounter no menu principal chamando o model
 
-        Menu menu = new Menu(c);
-        menu.start();
+        View view = new View(c);
+        view.start();
     }
 }
