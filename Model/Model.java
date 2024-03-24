@@ -1,8 +1,15 @@
 package Model;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 import Exceptions.UtilizadorJaExisteException;
 
-public class Model {
+public class Model implements Serializable {
 
     private UtilizadorManager utilizadorManager;
 
@@ -35,7 +42,7 @@ public class Model {
                 Utilizador u2 = new UtilizadorProfissional(nome, email, morada, freqCard, 0, 0);
                 this.utilizadorManager.addUtilizador(u2);
                 break;
-        
+
             default:
                 break;
         }
@@ -43,5 +50,44 @@ public class Model {
 
     public void listarUtilizadores() {
         this.utilizadorManager.listarUtilizadores();
+    }
+
+    public void removerUtilizador(int nUtilizador) {
+        this.utilizadorManager.removeUtilizador(nUtilizador);
+    }
+
+    public void atualizarUtilizador(int nUtilizador, int opcao, String value) {
+        switch (opcao) {
+            case 1:
+                this.utilizadorManager.atualizarNome(nUtilizador, value);
+                break;
+            case 2:
+                this.utilizadorManager.atualizarEmail(nUtilizador, value);
+                break;
+            case 3:
+                this.utilizadorManager.atualizarMorada(nUtilizador, value);
+                break;
+            case 4:
+                this.utilizadorManager.atualizarFreqCard(nUtilizador, Integer.parseInt(value));
+                break;
+        }
+    }
+
+    // Load method
+    public static Model load(String fileName) throws IOException, ClassNotFoundException {
+        String filePath = "data/" + fileName; 
+        try (FileInputStream fs = new FileInputStream(filePath);
+                ObjectInputStream os = new ObjectInputStream(fs)) {
+            return (Model) os.readObject();
+        }
+    }
+
+    // Save method
+    public void save(String fileName) throws IOException {
+        String filePath = "data/" + fileName;
+        try (FileOutputStream fs = new FileOutputStream(filePath);
+                ObjectOutputStream os = new ObjectOutputStream(fs)) {
+            os.writeObject(this);
+        }
     }
 }

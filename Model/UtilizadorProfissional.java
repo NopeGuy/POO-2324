@@ -1,5 +1,6 @@
 package Model;
 
+
 public class UtilizadorProfissional extends Utilizador{
     private int pontos;
     private int atividadesRealizadas;
@@ -12,7 +13,7 @@ public class UtilizadorProfissional extends Utilizador{
     }
 
     public UtilizadorProfissional(UtilizadorProfissional u) {
-        super(u.getNome(), u.getMorada(), u.getEmail(), u.getFreqCard());
+        super(u.getNUtilizador(), u.getNome(), u.getMorada(), u.getEmail(), u.getFreqCard());
         this.pontos = u.getPontos();
         this.atividadesRealizadas = u.getAtividadesRealizadas();
     }
@@ -72,6 +73,10 @@ public class UtilizadorProfissional extends Utilizador{
     @Override
     public Utilizador clone() {
         return new UtilizadorProfissional(this);
+    }
+
+     public double calculoCalorias(){
+        return 0;
     }
     
 }

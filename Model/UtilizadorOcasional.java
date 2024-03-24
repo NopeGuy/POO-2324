@@ -1,5 +1,6 @@
 package Model;
 
+
 public class UtilizadorOcasional extends Utilizador{
     
     private int pontos;
@@ -13,7 +14,7 @@ public class UtilizadorOcasional extends Utilizador{
     }
 
     public UtilizadorOcasional(UtilizadorOcasional u) {
-        super(u.getNome(), u.getMorada(), u.getEmail(), u.getFreqCard());
+        super(u.getNUtilizador(), u.getNome(), u.getMorada(), u.getEmail(), u.getFreqCard());
         this.pontos = u.getPontos();
         this.atividadesRealizadas = u.getAtividadesRealizadas();
     }
@@ -75,4 +76,7 @@ public class UtilizadorOcasional extends Utilizador{
         return new UtilizadorOcasional(this);
     }
     
+     public double calculoCalorias(){
+        return 0;
+    }
 }

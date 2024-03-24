@@ -13,7 +13,7 @@ public class UtilizadorAmador extends Utilizador{
     }
 
     public UtilizadorAmador(UtilizadorAmador u) {
-        super(u.getNome(), u.getMorada(), u.getEmail(), u.getFreqCard());
+        super(u.getNUtilizador() ,u.getNome(), u.getMorada(), u.getEmail(), u.getFreqCard());
         this.pontos = u.getPontos();
         this.atividadesRealizadas = u.getAtividadesRealizadas();
     }
@@ -71,6 +71,10 @@ public class UtilizadorAmador extends Utilizador{
     @Override
     public Utilizador clone() {
         return new UtilizadorAmador(this);
+    }
+
+    public double calculoCalorias(){
+        return 0;
     }
     
 }

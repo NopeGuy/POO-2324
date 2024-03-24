@@ -16,8 +16,23 @@ public class Controller {
         this.m.registarUtilizador(nome, email, morada, freqCard, escolha);
     }
 
+    public void removerUtilizador(int nUtilizador) {
+        this.m.removerUtilizador(nUtilizador);
+    }
+
+    public void atualizarUtilizador(int nUtilizador, int opcao , String value) {
+        this.m.atualizarUtilizador(nUtilizador, opcao, value);
+    }
+
     public void listarUtilizadores() {
         this.m.listarUtilizadores();
     }
 
+    public void load() throws Exception, ClassNotFoundException {
+        this.m = Model.load("data.ser");
+    }
+
+    public void save() throws Exception {
+        this.m.save("data.ser");
+    }
 }

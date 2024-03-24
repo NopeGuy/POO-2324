@@ -1,9 +1,12 @@
 package Model;
 
-public abstract class Utilizador {
+import java.io.Serializable;
+import java.util.List;
+
+public abstract class Utilizador implements Serializable{
 
     // Para auto incrementar o ID de utilizador
-    private int nUtilizadorCounter = 0;
+    private static int nUtilizadorCounter = 1;
 
     // Variáveis de instância
     private int nUtilizador;
@@ -11,7 +14,8 @@ public abstract class Utilizador {
     private String morada;
     private String email;
     private int freqCard;
-
+    private List<Atividade> atividadesEfetuadas;
+    
     // Getters
     public int getNUtilizador() {
         return this.nUtilizador;
@@ -37,6 +41,10 @@ public abstract class Utilizador {
         return nUtilizadorCounter;
     }
 
+    public List<Atividade> getAtividadesEfetuadas() {
+        return this.atividadesEfetuadas;
+    }
+
     // Setters
     public void setNUtilizador(int nUtilizador) {
         this.nUtilizador = nUtilizador;
@@ -59,12 +67,24 @@ public abstract class Utilizador {
     }
 
     public void setnUtilizadorCounter(int nUtilizadorCounter) {
-        this.nUtilizadorCounter = nUtilizadorCounter;
+        Utilizador.nUtilizadorCounter = nUtilizadorCounter;
+    }
+
+    public void setAtividades(List<Atividade> atividadesEfetuadas){
+        this.atividadesEfetuadas = atividadesEfetuadas;
     }
     
     // Construtores
     public Utilizador(String nome, String morada, String email, int freqCard) {
         this.nUtilizador = nUtilizadorCounter++;
+        this.nome = nome;
+        this.morada = morada;
+        this.email = email;
+        this.freqCard = freqCard;
+    }
+
+    public Utilizador(int nUtilizador, String nome, String morada, String email, int freqCard) {
+        this.nUtilizador = nUtilizador;
         this.nome = nome;
         this.morada = morada;
         this.email = email;
@@ -92,4 +112,7 @@ public abstract class Utilizador {
     public abstract boolean equals(Object o);
 
     public abstract Utilizador clone();
+
+    // método que determine um factor multiplicativo a utilizar no cálculo das calorias
+    public abstract double calculoCalorias();
 }
