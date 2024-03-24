@@ -1,44 +1,25 @@
 package Model;
 
 public class UtilizadorAmador extends Utilizador{
-    private int pontos;
-    private int atividadesRealizadas;
 
 
     // Construtores
-    public UtilizadorAmador(String nome, String morada, String email, int freqCard, int pontos, int atividadesRealizadas) {
+    public UtilizadorAmador(String nome, String morada, String email, int freqCard) {
         super(nome, morada, email, freqCard);
-        this.pontos = pontos;
-        this.atividadesRealizadas = atividadesRealizadas;
+    }
+    
+    public UtilizadorAmador(int uNum, String nome, String morada, String email, int freqCard) {
+        super(uNum, nome, morada, email, freqCard);
     }
 
     public UtilizadorAmador(UtilizadorAmador u) {
         super(u.getNUtilizador() ,u.getNome(), u.getMorada(), u.getEmail(), u.getFreqCard());
-        this.pontos = u.getPontos();
-        this.atividadesRealizadas = u.getAtividadesRealizadas();
     }
 
     public UtilizadorAmador() {
         super();
-        this.pontos = 0;
-        this.atividadesRealizadas = 0;
     }
 
-    public int getPontos() {
-        return pontos;
-    }
-
-    public void setPontos(int pontos) {
-        this.pontos = pontos;
-    }
-
-    public int getAtividadesRealizadas() {
-        return atividadesRealizadas;
-    }
-
-    public void setAtividadesRealizadas(int atividadesRealizadas) {
-        this.atividadesRealizadas = atividadesRealizadas;
-    }
 
     @Override
     public String toString() {
@@ -49,8 +30,6 @@ public class UtilizadorAmador extends Utilizador{
                 ", Morada = " + getMorada() +
                 ", Frequência Cardíaca Média = " + getFreqCard() +
                 ", Tipo = Amador" +
-                ", Pontos = " + pontos +
-                ", Atividades Realizadas = " + atividadesRealizadas +
                 " }";
     }
 
@@ -63,9 +42,7 @@ public class UtilizadorAmador extends Utilizador{
                 this.getNome().equals(u.getNome()) &&
                 this.getMorada().equals(u.getMorada()) &&
                 this.getEmail().equals(u.getEmail()) &&
-                this.getFreqCard() == u.getFreqCard() &&
-                this.pontos == u.getPontos() &&
-                this.atividadesRealizadas == u.getAtividadesRealizadas();
+                this.getFreqCard() == u.getFreqCard();
     }
 
     @Override
@@ -76,5 +53,6 @@ public class UtilizadorAmador extends Utilizador{
     public double calculoCalorias(){
         return 0;
     }
+    
     
 }

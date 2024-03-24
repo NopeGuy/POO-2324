@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import Controller.Controller;
 import Exceptions.UtilizadorJaExisteException;
+import Exceptions.UtilizadorNaoExisteException;
 
 public class View {
 
@@ -16,7 +17,7 @@ public class View {
         scanner = new Scanner(System.in);
     }
 
-    public void start() throws UtilizadorJaExisteException {
+    public void start() throws UtilizadorJaExisteException, UtilizadorNaoExisteException {
         System.out.println("\n\n---------------------------");
         System.out.println("| Bem-vindo ao GymAtHome! |");
         System.out.println("---------------------------\n\n");
@@ -57,7 +58,7 @@ public class View {
 
     }
 
-    public void menuUtilizadores() throws UtilizadorJaExisteException {
+    public void menuUtilizadores() throws UtilizadorJaExisteException, UtilizadorNaoExisteException {
         System.out.println("Menu Utilizadores");
         System.out.println("1 - Adicionar Utilizador");
         System.out.println("2 - Remover Utilizador");
@@ -141,8 +142,8 @@ public class View {
         try {
             int tipo = Integer.parseInt(tipoUtilizador);
             _cont.registarUtilizador(nome, email, morada, freqCard, tipo);
-        } catch (NullPointerException e) {
-            System.out.println("Erro: " + e.getMessage());
+        } catch (NullPointerException | UtilizadorJaExisteException e) {
+                System.out.println("Erro: " + e.getMessage());
         }
     }
 
@@ -158,10 +159,18 @@ public class View {
         }
     }
 
-    public void atualizarUtilizador() {
+    public void atualizarUtilizador() throws UtilizadorNaoExisteException{
     System.out.println("Atualizar Utilizador");
     System.out.print("Número do Utilizador a atualizar: ");
     int nUtilizador = scanner.nextInt();
+    try{
+        _cont.pesquisarUtilizador(nUtilizador);
+        scanner.nextLine();
+    } catch (UtilizadorNaoExisteException e) {
+        System.out.println("Erro: " + e.getMessage());
+        return;
+    }
+    
     try {
         System.out.println("Indique que dados pretende atualizar:");
         System.out.println("1 - Nome");

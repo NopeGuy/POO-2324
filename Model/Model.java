@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import Exceptions.UtilizadorJaExisteException;
+import Exceptions.UtilizadorNaoExisteException;
 
 public class Model implements Serializable {
 
@@ -25,21 +26,21 @@ public class Model implements Serializable {
     public void registarUtilizador(String nome, String email, String morada, int freqCard, int tipoUtilizador)
             throws NullPointerException, UtilizadorJaExisteException {
 
-        if (reverCredenciais(email) != true) {
+        if (reverCredenciais(email) != true) 
             throw new UtilizadorJaExisteException();
-        }
+        
 
         switch (tipoUtilizador) {
             case 0:
-                UtilizadorOcasional u0 = new UtilizadorOcasional(nome, email, morada, freqCard, 0, 0);
+                UtilizadorOcasional u0 = new UtilizadorOcasional(nome, email, morada, freqCard);
                 this.utilizadorManager.addUtilizador(u0);
                 break;
             case 1:
-                Utilizador u1 = new UtilizadorAmador(nome, email, morada, freqCard, 0, 0);
+                Utilizador u1 = new UtilizadorAmador(nome, email, morada, freqCard);
                 this.utilizadorManager.addUtilizador(u1);
                 break;
             case 2:
-                Utilizador u2 = new UtilizadorProfissional(nome, email, morada, freqCard, 0, 0);
+                Utilizador u2 = new UtilizadorProfissional(nome, email, morada, freqCard);
                 this.utilizadorManager.addUtilizador(u2);
                 break;
 
@@ -70,6 +71,8 @@ public class Model implements Serializable {
             case 4:
                 this.utilizadorManager.atualizarFreqCard(nUtilizador, Integer.parseInt(value));
                 break;
+            case 5:
+                this.utilizadorManager.atualizarUser(nUtilizador, Integer.parseInt(value));
         }
     }
 
@@ -89,5 +92,9 @@ public class Model implements Serializable {
                 ObjectOutputStream os = new ObjectOutputStream(fs)) {
             os.writeObject(this);
         }
+    }
+
+    public void pesquisarUtilizador(int nUser) throws UtilizadorNaoExisteException{
+        this.utilizadorManager.pesquisarUtilizador(nUser);
     }
 }

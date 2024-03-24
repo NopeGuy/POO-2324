@@ -1,6 +1,7 @@
 package Controller;
 
 import Exceptions.UtilizadorJaExisteException;
+import Exceptions.UtilizadorNaoExisteException;
 import Model.Model;
 
 public class Controller {
@@ -34,5 +35,9 @@ public class Controller {
 
     public void save() throws Exception {
         this.m.save("data.ser");
+    }
+
+    public void pesquisarUtilizador(int nUtilizador) throws UtilizadorNaoExisteException {
+        this.m.pesquisarUtilizador(nUtilizador);
     }
 }

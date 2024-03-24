@@ -2,42 +2,22 @@ package Model;
 
 
 public class UtilizadorProfissional extends Utilizador{
-    private int pontos;
-    private int atividadesRealizadas;
 
     // Construtores
-    public UtilizadorProfissional(String nome, String morada, String email, int freqCard, int pontos, int atividadesRealizadas) {
+    public UtilizadorProfissional(String nome, String morada, String email, int freqCard) {
         super(nome, morada, email, freqCard);
-        this.pontos = pontos;
-        this.atividadesRealizadas = atividadesRealizadas;
+    }
+
+    public UtilizadorProfissional(int uNum, String nome, String morada, String email, int freqCard) {
+        super(uNum, nome, morada, email, freqCard);
     }
 
     public UtilizadorProfissional(UtilizadorProfissional u) {
         super(u.getNUtilizador(), u.getNome(), u.getMorada(), u.getEmail(), u.getFreqCard());
-        this.pontos = u.getPontos();
-        this.atividadesRealizadas = u.getAtividadesRealizadas();
     }
 
     public UtilizadorProfissional() {
         super();
-        this.pontos = 0;
-        this.atividadesRealizadas = 0;
-    }
-
-    public int getPontos() {
-        return pontos;
-    }
-
-    public void setPontos(int pontos) {
-        this.pontos = pontos;
-    }
-
-    public int getAtividadesRealizadas() {
-        return atividadesRealizadas;
-    }
-
-    public void setAtividadesRealizadas(int atividadesRealizadas) {
-        this.atividadesRealizadas = atividadesRealizadas;
     }
 
     @Override
@@ -49,8 +29,6 @@ public class UtilizadorProfissional extends Utilizador{
                 ", Morada = " + getMorada() +
                 ", Frequência Cardíaca Média = " + getFreqCard() +
                 ", Tipo = Profissional" +
-                ", Pontos = " + pontos +
-                ", Atividades Realizadas = " + atividadesRealizadas +
                 " }";
     }
 
@@ -65,9 +43,7 @@ public class UtilizadorProfissional extends Utilizador{
                 this.getNome().equals(u.getNome()) &&
                 this.getMorada().equals(u.getMorada()) &&
                 this.getEmail().equals(u.getEmail()) &&
-                this.getFreqCard() == u.getFreqCard() &&
-                this.pontos == u.getPontos() &&
-                this.atividadesRealizadas == u.getAtividadesRealizadas();
+                this.getFreqCard() == u.getFreqCard();
     }
 
     @Override
