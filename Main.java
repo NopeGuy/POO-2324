@@ -1,6 +1,6 @@
 import Controller.Controller;
-import Exceptions.UtilizadorJaExisteException;
-import Exceptions.UtilizadorNaoExisteException;
+import Errors.UtilizadorJaExisteException;
+import Errors.UtilizadorNaoExisteException;
 import Model.Model;
 import View.*;
 

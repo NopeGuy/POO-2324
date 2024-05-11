@@ -1,16 +1,14 @@
 package View;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
-
 import Controller.Controller;
-import Exceptions.UtilizadorJaExisteException;
-import Exceptions.UtilizadorNaoExisteException;
+import Errors.UtilizadorJaExisteException;
+import Errors.UtilizadorNaoExisteException;
 
 public class View {
 
-    private Controller _cont = null;
-    Scanner scanner = null;
+    private static Controller _cont = null;
+    static Scanner scanner = null;
 
     public View(Controller c) {
         _cont = c;
@@ -18,267 +16,74 @@ public class View {
     }
 
     public void start() throws UtilizadorJaExisteException, UtilizadorNaoExisteException {
+        mainMenu(scanner);
+        scanner.close();
+    }
+
+    public static void mainMenu(Scanner scanner) throws UtilizadorJaExisteException, UtilizadorNaoExisteException {
+        try {
+            _cont.save();
+        } catch (Exception e) {
+            System.out.println("Erro ao guardar o estado da aplicação: " + e.getMessage());
+        }
+        // serializable não guarda o counter, por isso temos de o guardar à parte
+        _cont.getAndSetCounter();
         System.out.println("\n\n---------------------------");
         System.out.println("| Bem-vindo ao GymAtHome! |");
         System.out.println("---------------------------\n\n");
-        System.out.println("1 - Utilizadores");
-        System.out.println("2 - Atividades");
-        System.out.println("3 - Treino");  
-        System.out.println("4 - Tempo\n");
-        System.out.println("0 - Sair\n\n");
-        System.out.print("Escolha uma opção: ");
-        try (Scanner scanner = new Scanner(System.in)) {
-            int opcao = scanner.nextInt();
-            switch (opcao) {
-                case 1:
-                    menuUtilizadores();
-                    break;
-                case 2:
-                    System.out.println("Atividades");
-                    break;
-                case 3:
-                    System.out.println("Treino");
-                    break;
-                case 4:
-                    System.out.println("Tempo");
-                    break;
-                case 0:
-                    try {
-                        _cont.save();
-                    } catch (Exception e) {
-                        System.out.println("Erro ao guardar o estado da aplicação: " + e.getMessage());
-                    }
-                    System.out.println("Adeus!");
-                    break;
-                default:
-                    System.out.println("Opção inválida!");
-                    break;
-            }
-        }
+        _cont.printData();
 
-    }
-
-    public void menuUtilizadores() throws UtilizadorJaExisteException, UtilizadorNaoExisteException {
-        System.out.println("Menu Utilizadores");
-        System.out.println("1 - Adicionar Utilizador");
-        System.out.println("2 - Remover Utilizador");
-        System.out.println("3 - Listar Utilizadores");
-        System.out.println("4 - Atualizar Utilizador");
-        System.out.println("0 - Voltar\n");
+        System.out.println("1  - Menu Utilizadores");
+        System.out.println("2  - Menu de Atividades");
+        System.out.println("3  - Menu de Plano de Treino");
+        System.out.println("4  - Queries");
+        System.out.println("5  - Gravar estado da aplicação");
+        System.out.println("99 - Passar tempo");
+        System.out.println("0  - Sair\n");
         System.out.print("Escolha uma opção: ");
 
-        try (Scanner scanner = new Scanner(System.in)) {
-            int opcao = scanner.nextInt();
-            switch (opcao) {
-                case 1:
-                    adicionarUtilizador();
-                    break;
-                case 2:
-                    removerUtilizador();
-                    break;
-                case 3:
-                    System.out.println("Listar Utilizadores");
-                    _cont.listarUtilizadores();
-                    break;
-                case 4:
-                    atualizarUtilizador();
-                    break;
-                case 0:
-                    System.out.println("Voltar");
-                    break;
-                default:
-                    System.out.println("\nOpção inválida!\n");
-                    start();
-                    break;
-            }
-            start();
-        }
-    }
-
-    public void adicionarUtilizador() throws UtilizadorJaExisteException {
-        System.out.print("Adicionar Utilizador\n");
-        System.out.print("Nome: ");
-        String nome = scanner.nextLine();
-        System.out.print("\nEmail: ");
-        String email = scanner.nextLine();
-        System.out.print("\nMorada: ");
-        String morada = scanner.nextLine();
-        int freqCard = 0;
-        while (true) {
-            try {
-                System.out.print("\nFrequência Cardíaca Média: ");
-                freqCard = scanner.nextInt();
-                if (freqCard < 50 || freqCard > 250) {
-                    System.out.println("A frequência cardíaca deve estar entre 50 e 250. Tente novamente.");
-                    continue;
-                }
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("Por favor, insira um número inteiro para a frequência cardíaca.");
-                scanner.next();
-            }
-        }
-        scanner.nextLine();
-
-        String tipoUtilizador = "-1";
-        while (!tipoUtilizador.equals("0") && !tipoUtilizador.equals("1") && !tipoUtilizador.equals("2")) {
-            try {
-                System.out.println("Tipo de Utilizador:");
-                System.out.println("0 - Utilizador Ocasional");
-                System.out.println("1 - Utilizador Amador");
-                System.out.println("2 - Utilizador Profissional");
-                System.out.print("Escolha uma opção: ");
-                tipoUtilizador = scanner.nextLine();
-                System.out.println(tipoUtilizador);
-                if (!tipoUtilizador.equals("0") && !tipoUtilizador.equals("1") && !tipoUtilizador.equals("2")) {
-                    System.out.println("Opção inválida! Por favor, escolha uma opção entre 0 e 2.");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Por favor, insira um número inteiro para o tipo de utilizador.");
-                scanner.next();
-            }
-        }
-
-        try {
-            int tipo = Integer.parseInt(tipoUtilizador);
-            _cont.registarUtilizador(nome, email, morada, freqCard, tipo);
-        } catch (NullPointerException | UtilizadorJaExisteException e) {
-                System.out.println("Erro: " + e.getMessage());
-        }
-    }
-
-    public void removerUtilizador() {
-        System.out.println("Remover Utilizador");
-        System.out.print("Número do Utilizador a remover: ");
-
-        int nUtilizador = scanner.nextInt();
-        try {
-            _cont.removerUtilizador(nUtilizador);
-        } catch (NullPointerException e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
-    }
-
-    public void atualizarUtilizador() throws UtilizadorNaoExisteException{
-    System.out.println("Atualizar Utilizador");
-    System.out.print("Número do Utilizador a atualizar: ");
-    int nUtilizador = scanner.nextInt();
-    try{
-        _cont.pesquisarUtilizador(nUtilizador);
-        scanner.nextLine();
-    } catch (UtilizadorNaoExisteException e) {
-        System.out.println("Erro: " + e.getMessage());
-        return;
-    }
-    
-    try {
-        System.out.println("Indique que dados pretende atualizar:");
-        System.out.println("1 - Nome");
-        System.out.println("2 - Email");
-        System.out.println("3 - Morada");
-        System.out.println("4 - Frequência Cardíaca Média");
-        System.out.println("5 - Tipo de Utilizador");
-        System.out.print("Escolha uma opção: ");
         int opcao = scanner.nextInt();
-        scanner.nextLine();
-
         switch (opcao) {
             case 1:
-                System.out.print("Novo Nome: ");
-                String nome = scanner.nextLine();
-                _cont.atualizarUtilizador(nUtilizador, opcao, nome);
+                menuUtilizadores.start(scanner, _cont);
                 break;
             case 2:
-                System.out.print("Novo Email: ");
-                String email = scanner.nextLine();
-                _cont.atualizarUtilizador(nUtilizador, opcao, email);
+                menuAtividades.start(scanner, _cont);
                 break;
             case 3:
-                System.out.print("Nova Morada: ");
-                String morada = scanner.nextLine();
-                _cont.atualizarUtilizador(nUtilizador, opcao, morada);
+                menuTreinos.start(scanner, _cont);
                 break;
             case 4:
-                String freqCard = "";
-                while (true) {
-                    try {
-                        System.out.print("Nova Frequência Cardíaca Média: ");
-                        freqCard = scanner.nextLine();
-                        int freqCardInt = Integer.parseInt(freqCard);
-                        if (freqCardInt < 50 || freqCardInt > 250) {
-                            System.out.println("A frequência cardíaca deve estar entre 50 e 250. Tente novamente.");
-                            continue;
-                        }
-                        break;
-                    } catch (InputMismatchException e) {
-                        System.out.println("Por favor, insira um número inteiro para a frequência cardíaca.");
-                        scanner.next();
-                    }
-                }
-                _cont.atualizarUtilizador(nUtilizador, opcao, freqCard);
+                menuQueries.start(scanner, _cont);
                 break;
             case 5:
-                int tipoUtilizador = -1;
-                while (tipoUtilizador < 0 || tipoUtilizador > 2) {
-                    try {
-                        System.out.println("Tipo de Utilizador:");
-                        System.out.println("0 - Utilizador Ocasional");
-                        System.out.println("1 - Utilizador Amador");
-                        System.out.println("2 - Utilizador Profissional");
-                        System.out.print("Escolha uma opção: ");
-                        tipoUtilizador = scanner.nextInt();
-                        if (tipoUtilizador < 0 || tipoUtilizador > 2) {
-                            System.out.println("Opção inválida! Por favor, escolha uma opção entre 0 e 2.");
-                        }
-                    } catch (InputMismatchException e) {
-                        System.out.println("Por favor, insira um número inteiro para o tipo de utilizador.");
-                        scanner.next();
-                    }
+                try {
+                    _cont.save();
+                } catch (Exception e) {
+                    System.out.println("Erro ao guardar o estado da aplicação: " + e.getMessage());
                 }
-                _cont.atualizarUtilizador(nUtilizador, opcao, String.valueOf(tipoUtilizador));
+                System.out.println("Estado da aplicação guardado com sucesso!");
+                mainMenu(scanner);
+                break;
+            case 99:
+                System.out.print("Quantos minutos deseja passar? ");
+                int minutos = scanner.nextInt();
+                _cont.passarTempo(minutos);
+                scanner.nextLine();
+                mainMenu(scanner);
+                break;
+            case 0:
+                try {
+                    _cont.save();
+                } catch (Exception e) {
+                    System.out.println("Erro ao guardar o estado da aplicação: " + e.getMessage());
+                }
+                System.out.println("Adeus!");
+                System.exit(0);
+                break;
+            default:
+                System.out.println("\nOpção inválida!\n");
                 break;
         }
-    } catch (NullPointerException e) {
-        System.out.println("Erro: " + e.getMessage());
     }
-}
-    /*
-     public void menuAtividades(){
-        System.out.println("Menu Atividades");
-        System.out.println("1 - Adicionar Atividades");
-        System.out.println("2 - Remover Atividade");
-        System.out.println("3 - Listar Atividades");
-        System.out.println("4 - Atualizar Atividade");
-        System.out.println("0 - Voltar\n");
-        System.out.print("Escolha uma opção: ");
-
-        try (Scanner scanner = new Scanner(System.in)) {
-            int opcao = scanner.nextInt();
-            switch (opcao) {
-                case 1:
-                    adicionarAtividade();
-                    break;
-                case 2:
-                    removerAtividade();
-                    break;
-                case 3:
-                    System.out.println("Listar Utilizadores");
-                    _cont.listarAtividades();
-                    break;
-                case 4:
-                    System.out.println("Atualizar Utilizador");
-                    break;
-                case 0:
-                    System.out.println("Voltar");
-                    break;
-                default:
-                    System.out.println("\nOpção inválida!\n");
-                    start();
-                    break;
-            }
-            start();
-        }
-    }
-    */
-
 }
